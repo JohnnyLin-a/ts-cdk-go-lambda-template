@@ -2,38 +2,15 @@ package main
 
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
-	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
-	"github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2"
-	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
 )
-
-type CdkWorkshopStackProps struct {
-	awscdk.StackProps
-}
-
-func NewCdkWorkshopStack(scope constructs.Construct, id string, props *CdkWorkshopStackProps) awscdk.Stack {
-	var sprops awscdk.StackProps
-	if props != nil {
-		sprops = props.StackProps
-	}
-	stack := awscdk.NewStack(scope, &id, &sprops)
-
-	awscdklambdagoalpha.NewGoFunction(stack, jsii.String("HelloWorldLambdaFunction"), &awscdklambdagoalpha.GoFunctionProps{
-		FunctionName: jsii.String("HelloWorldLambdaFunction"),
-		Runtime:      awslambda.Runtime_PROVIDED_AL2023(),
-		Architecture: awslambda.Architecture_ARM_64(),
-		Entry:        jsii.String("./lambdas/hello-world"),
-	})
-	return stack
-}
 
 func main() {
 	defer jsii.Close()
 
 	app := awscdk.NewApp(nil)
 
-	NewCdkWorkshopStack(app, "hello-world-stack", &CdkWorkshopStackProps{
+	NewWorkshopStack(app, "hello-world-stack", &WorkshopStackProps{
 		StackProps: awscdk.StackProps{
 			Env: env(),
 		},
@@ -55,8 +32,8 @@ func env() *awscdk.Environment {
 	// the stack to. This is the recommendation for production stacks.
 	//---------------------------------------------------------------------------
 	// return &awscdk.Environment{
-	//  Account: jsii.String("123456789012"),
-	//  Region:  jsii.String("us-east-1"),
+	//  Account: new("123456789012"),
+	//  Region:  new("us-east-1"),
 	// }
 
 	// Uncomment to specialize this stack for the AWS Account and Region that are
@@ -64,7 +41,7 @@ func env() *awscdk.Environment {
 	// stacks.
 	//---------------------------------------------------------------------------
 	// return &awscdk.Environment{
-	//  Account: jsii.String(os.Getenv("CDK_DEFAULT_ACCOUNT")),
-	//  Region:  jsii.String(os.Getenv("CDK_DEFAULT_REGION")),
+	// 	Account: new(os.Getenv("CDK_DEFAULT_ACCOUNT")),
+	// 	Region:  new(os.Getenv("CDK_DEFAULT_REGION")),
 	// }
 }

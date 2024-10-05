@@ -13,6 +13,4 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 
 ## Reasoning on why not to use this.
-- Really wordy to the point it is slowing me down when writing it.
-- All primitive datatypes wrapped by jsii datatypes just to work in the native language of JS/TS.
 - library updates come late as Go is not the native cdk target language when the package is being built.
